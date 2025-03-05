@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>masonry image gallery with viewer</title>
+    <!-- font awesome cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+</head>
+<style>
+    *,
+    *::before,
+    *::after {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    body {
+        background: linear-gradient(to right, #67b26f, #4ca2cd);
+        font-family: 'poppins';
+    }
+
+    .no-scroll {
+        overflow: hidden;
+    }
+
+    body h1 {
+        text-align: center;
+        color: white;
+        text-transform: capitalize;
+        margin-block: 1rem;
+    }
+
+    /* gallerContainer */
+    .gallerContainer {
+        max-width: 100%;
+        width: 1000px;
+        margin: 1rem auto;
+        columns: 3;
+        column-gap: 0.4rem;
+    }
+
+    .gallerContainer .imgBox {
+        width: 100%;
+        cursor: pointer;
+        overflow: hidden;
+        position: relative;
+        isolation: isolate;
+    }
+
+    .gallerContainer .imgBox::before {
+        content: "click to view";
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        background-color: rgba(0, 0, 0, 0.351);
+        text-transform: capitalize;
+        font: 1.2rem;
+        padding: 0.5rem;
+        text-align: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: 300ms ease;
+    }
+
+    .gallerContainer .imgBox:hover::before {
+        top: 50%;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .gallerContainer .imgBox img {
+        width: 100%;
+    }
+
+    /* galleryViewer */
+    .galleryViewer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.31);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 1rem;
+        opacity: 0;
+    }
+
+    .galleryViewer.active {
+        display: flex;
+    }
+
+    .galleryViewer .imgBox {
+        display: flex;
+        max-width: 800px;
+        max-height: 600px;
+        border: 2px solid white;
+    }
+
+    .galleryViewer .imgBox img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .galleryViewer .details {
+        color: white;
+        background-color: black;
+        font-size: 1.4rem;
+        padding: 0.4rem;
+    }
+
+    .galleryViewer .arrows {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+    }
+
+    .galleryViewer .arrows span {
+        background-color: white;
+        font-size: 1.2rem;
+        width: 45px;
+        height: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: 300ms ease;
+    }
+
+    .galleryViewer .arrows span:hover {
+        background-color: rgba(255, 255, 255, 0.371);
+    }
+
+    .galleryViewer .arrows span:active {
+        background-color: rgba(255, 255, 255, 0.592);
+        transform: scale(0.9);
+    }
+
+    .galleryViewer .close {
+        width: 45px;
+        height: 45px;
+        background-color: red;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        cursor: pointer;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+    }
+
+    .galleryViewer .close:hover {
+        background-color: rgba(255, 0, 0, 0.599);
+    }
+</style>
+
+<body>
+    <h1>masonry image gallery with viewer</h1>
+    <div class="gallerContainer">
+        <div class="imgBox"><img src="./images/img-1.jpg" alt=""></div>
+        <div class="imgBox"><img src="./images/img-2.jpg" alt=""></div>
+        <div class="imgBox"><img src="./images/img-3.jpg" alt=""></div>
+        <div class="imgBox"><img src="./images/img-4.jpg" alt=""></div>
+        <div class="imgBox"><img src="./images/img-5.jpg" alt=""></div>
+        <div class="imgBox"><img src="./images/img-6.jpg" alt=""></div>
+        <div class="imgBox"><img src="./images/img-7.jpg" alt=""></div>
+        <div class="imgBox"><img src="./images/img-8.jpg" alt=""></div>
+        <div class="imgBox"><img src="./images/img-9.jpg" alt=""></div>
+        <div class="imgBox"><img src="./images/img-10.jpg" alt=""></div>
+        <div class="imgBox"><img src="./images/img-11.jpg" alt=""></div>
+        <div class="imgBox"><img src="./images/img-12.jpg" alt=""></div>
+        <div class="imgBox"><img src="./images/img-13.jpg" alt=""></div>
+        <div class="imgBox"><img src="./images/img-14.jpg" alt=""></div>
+        <div class="imgBox"><img src="./images/img-15.jpg" alt=""></div>
+        <div class="imgBox"><img src="./images/img-16.jpg" alt=""></div>
+    </div>
+    <!-- gallery viewer -->
+    <div class="galleryViewer">
+        <div class="imgBox"><img src="./images/img-1.jpg" alt=""></div>
+        <div class="details"><span>1/4</span></div>
+        <div class="arrows">
+            <span class="prev"><i class="fa-solid fa-arrow-left"></i></span>
+            <span class="next"><i class="fa-solid fa-arrow-right"></i></span>
+        </div>
+        <div class="close">
+            <span><i class="fa-solid fa-xmark"></i></span>
+        </div>
+    </div>
+    <!-- gsap cdn -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <!-- script code -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+        let galleryContainer = document.querySelector('.gallerContainer');
+        let imageBoxes = galleryContainer.querySelectorAll('.imgBox')
+        // gallery viewer
+        let galleryViewer = document.querySelector('.galleryViewer');
+        let viewerImageBox = galleryViewer.querySelector('.imgBox');
+        let viewerImage = galleryViewer.querySelector('.imgBox img');
+        let details = galleryViewer.querySelector('.details span');
+        let nextBtn = galleryViewer.querySelector('.arrows .next');
+        let prevBtn = galleryViewer.querySelector('.arrows .prev');
+        let galleryCloser = galleryViewer.querySelector('.close');
+
+        // slider variables
+        let isAnimating = false;
+        let currentSlideIndex = 0;
+
+        //open gallery viewer
+        imageBoxes.forEach((imgBox,index)=>{
+            imgBox.addEventListener("click",()=>{
+                let img = imgBox.querySelector('img');
+                gsap.to(galleryViewer,{
+                    opacity:1,
+                    scale:1,
+                    duration:0.3,
+                    ease:"power2.in",
+                    onStart:()=>{
+                        galleryViewer.classList.add('active');
+                        document.body.classList.add('no-scroll')
+                        currentSlideIndex=index;
+                    }
+                })
+                //show clicked image
+                gsap.fromTo(viewerImageBox,{
+                    opacity:0,
+                    scale:0.8,
+                    onComplete:()=>{
+                        viewerImage.src = img.src;
+                        details.innerText = `${currentSlideIndex + 1}/${imageBoxes.length}`
+                    }
+                },{
+                    opacity:1,
+                    scale:1,
+                    duration:0.5,
+                    ease:"power2.out"
+                })
+            })
+        })
+
+        // to close gallery viewer
+        galleryCloser.addEventListener("click",()=>{
+            gsap.to(galleryViewer,{
+                opacity:0,
+                scale:0.8,
+                duration:0.3,
+                ease:"power2.in",
+                onComplete:()=>{
+                    galleryViewer.classList.remove('active')
+                    document.body.classList.remove('no-scroll')
+                    currentSlideIndex=0;
+                }
+            })
+        })
+
+        // slide functions
+        function showSlide(isNext=true){
+            isAnimating = true;
+            viewerImage.src = imageBoxes[currentSlideIndex].querySelector('img').src;
+            gsap.fromTo(viewerImageBox,{
+                opacity:0,
+                x:isNext ? "100%" :"-100%"
+            },
+        {
+            opacity:1,
+            x:"0%",
+            duration:0.5,
+            ease:"power2.out",
+            onStart:()=>{
+                details.innerText = `${currentSlideIndex + 1}/${imageBoxes.length}`
+            },
+            onComplete:()=>{
+                isAnimating=false;
+            }
+        })
+        }
+        function nextSlide(){
+            if(isAnimating) return
+            currentSlideIndex = (currentSlideIndex +1)% imageBoxes.length;
+            showSlide()
+        }
+        function prevSlide(){
+            if(isAnimating) return
+            currentSlideIndex = (currentSlideIndex -1 + imageBoxes.length)% imageBoxes.length;
+            showSlide(false)
+        }
+        //call functions on click
+        nextBtn.addEventListener('click',nextSlide)
+        prevBtn.addEventListener('click',prevSlide)
+        })
+    </script>
+</body>
+
+</html>
