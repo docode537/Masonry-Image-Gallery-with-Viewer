@@ -6,7 +6,7 @@ A simple masonry-style image gallery with an interactive viewer built using HTML
 ![Masonry Image Gallery](demo.gif)
 
 ## 🔥 Tutorials
-📺 Watch the tutorial on **[Video Tutorial]()**
+📺 Watch the tutorial on **[Video Tutorial](https://youtu.be/OLATdPInNSc?si=mZt8Gf9sUmwnR84X)**
 📖 Read the blog post on **[Blog Tutorial](https://docode.co.in/post/masonry-image-gallery-with-viewer-using-html-css-javascript-and-gsap)**
 
 ## Features
